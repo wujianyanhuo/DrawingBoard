@@ -1,0 +1,419 @@
+<!-- ==========================前端代码块=========================== -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            display: flex;
+            width: 100%;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        #menu{
+            width: 100%;
+            height: 30px;
+            background-color: #c0c0c0;
+            display: flex;
+            flex-direction: row;
+        }
+        .menu{
+            width: 50px;
+            height: 30px;
+            font-size: 15px;
+            line-height: 30px;
+            margin-left: 3px;
+        }
+        .menu:hover .sec_menu{
+            display: block;
+        }
+        /* 二级菜单 */
+        .sec_menu {
+            display: none;
+            position: fixed;
+            top: 35px;
+            width: 55px;
+            height: auto;
+            background-color: #c0c0c0;
+            box-shadow: 1px 1px,-1px -1px white;
+        }
+        ul {
+            list-style-type:none;
+            padding: 0px;
+            margin: 0px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+
+        #tool_bar{
+            width: 6%;
+            height: auto;
+            background-color: #c0c0c0;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        .tool_row{
+            width: 50px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            height: 50%;
+            align-items: center;
+            background-image: url(images/菜单功能.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .tool{
+            width: 24px;
+            height: 26px;
+            box-shadow: 1px 1px,-1px -1px white;
+        }
+        .tool:hover{
+            box-shadow: -1px -1px,1px 1px white;
+        }
+
+
+        #canvas{
+            width:94%;
+            height: auto;
+            background-color: #7b7b7b;
+            border-bottom: 1px solid white;
+        }
+
+        #foot{
+            width: 100%;
+            height: 25px;
+            background-color: #c0c0c0;
+        }
+        span{
+            font-size: 13px;
+            margin-left: 4px;
+        }
+        canvas{
+            background-color: white;
+            margin: 5px;
+        }
+
+
+        #color_bar{
+            width: 100%;
+            height: auto;
+            background-color: #c0c0c0;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            
+        }
+        .color_row{
+            width: 28%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            z-index: 3;
+            margin-top: 3px;
+        }
+        .color{
+            width: 20px;
+            height: 20px;
+            margin: 2px;
+            box-shadow: -1px -1px,1px 1px white;
+        }
+        .bi_color{
+            width: 33px;
+            height: 33px;
+            padding: 10px;
+        }
+        .bi_color div{
+            position: relative;
+            border: 0px;
+        }
+        .bi_color :nth-child(1){
+            top: -5px;
+        }
+        .bi_color :nth-child(2){
+            top: -35%;
+            right: -25%;
+        }
+        input {
+            display: block;
+            width: 100%;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 绘画板 -->
+    <div id="box">
+        <div id="menu">
+            <div class="menu">文件
+                <ul class="sec_menu">
+                        <li>新建</li>
+                        <input type="file" placeholder="打开">
+                        <li>打开</li>
+                        <li>保存</li>
+                </ul>
+            </div>
+            <div class="menu">编辑
+                <ul class="sec_menu">
+                    <li>撤销</li>
+                    <li>清空</li>
+                </ul>
+            </div>
+            <div class="menu">视图
+                <ul class="sec_menu">
+                        <li>工具栏</li>
+                        <li>色板</li>
+                        <li>状态栏</li>
+                </ul>
+            </div>
+            <div class="menu">帮助
+                <div class="sec_menu">
+                    <ul>
+                        <li>关于画板</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="tool_bar">
+            <div class="tool_row">
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+                <div class="tool"></div>
+            </div>
+        </div>
+        <id id="canvas">
+            <canvas width="600" height="400"></canvas>
+        </id>
+        <div id="color_bar">
+            <div class="bi_color color" >
+                <div class="color" style="background:#000; z-index: 1;"></div>
+                <div class="color" style="background:#fff; z-index: 2;"></div>
+            </div>
+            <div class="color_row">
+                <div class="color" style="background:#000;"></div>
+                <div class="color" style="background:#787878;" ></div>
+                <div class="color" style="background:#870000;"></div>
+                <div class="color" style="background:#757a0c;"></div>
+                <div class="color" style="background:#007b19;"></div>
+                <div class="color" style="background:#00797a;"></div>
+                <div class="color" style="background:#020077;"></div>
+                <div class="color" style="background:#890074;"></div>
+                <div class="color" style="background:#767a3a;"></div>
+                <div class="color" style="background:#003738;"></div>
+                <div class="color" style="background:#0071fd;"></div>
+                <div class="color" style="background:#003278;" ></div>
+                <div class="color" style="background:#4d00fc;"></div>
+                <div class="color" style="background:#833700;"></div>
+                <div class="color" style="background:#fff;"></div>
+                <div class="color" style="background:#bbbbcf;"></div>
+                <div class="color" style="background:#f00;"></div>
+                <div class="color" style="background:#ff0;"></div>
+                <div class="color" style="background:#0f0;"></div>
+                <div class="color" style="background:#0ff;"></div>
+                <div class="color" style="background:#2d00fc;"></div>
+                <div class="color" style="background:#f0f;" ></div>
+                <div class="color" style="background:#fcff7e;"></div>
+                <div class="color" style="background:#00ff87;"></div>
+                <div class="color" style="background:#00ffff;"></div>
+                <div class="color" style="background:#8370fc;"></div>
+                <div class="color" style="background:#ff006b;"></div>
+                <div class="color" style="background:#ff741c;"></div>
+            </div>
+        </div>
+        <div id="foot"><span>
+            For Help,click Help Topics on the Help Menu.
+        </span></div>
+    </div>
+</body>
+<script>
+// 调色部分
+var canvas=document.getElementsByTagName("canvas")[0];
+var ctx = canvas.getContext("2d");
+//点击颜色函数
+var color_bar = document.getElementById("color_bar");
+color_bar.addEventListener("click",colorChoose);
+var color = String("black");
+function colorChoose(e){
+    color = e.target.style.backgroundColor;
+    ctx.strokeStyle=String(color);
+}
+// 黑白色转换
+var bi_color = document.getElementsByClassName("bi_color")[0];
+var black =bi_color.children[0];
+var white = bi_color.children[1];
+bi_color.addEventListener("click",function(e){
+    if(e.target===black){
+        black.style.zIndex=2;
+        white.style.zIndex=1;
+    }
+    else{
+        black.style.zIndex=1;
+        white.style.zIndex=2;
+    }
+
+})
+// --------------调色板部分结束-----------------
+
+
+// 画布画图实现
+
+// 为画布添加一个鼠标监听
+canvas.addEventListener("mousedown",mouseHandler);
+    function mouseHandler(e){
+        if(e.type === "mousedown"){
+            ctx.beginPath();
+            ctx.moveTo(e.offsetx,e.offsetY);
+            canvas.addEventListener("mousemove",mouseHandler);
+            canvas.addEventListener("mouseup",mouseHandler);
+        }else if(e.type === "mousemove"){
+            ctx.lineTo(e.offsetX,e.offsetY);
+            ctx.stroke();
+        }else if(e.type === "mouseup"){
+            canvas.removeEventListener("mousemove",mouseHandler);
+            canvas.removeEventListener("mouseup",mouseHandler);
+        }
+    }
+
+// -----------------画布画图实现部分实现-------------------------
+
+// 二级菜单
+// -----------------二级菜单之一 ---文件-------------------------
+// <第一部分>新建画布
+var xinjian = document.getElementsByTagName("li")[0];
+xinjian.onclick=()=>{
+    var canBox = document.getElementById("canvas");
+    var canvas = document.createElement("canvas");
+    var curCan = document.getElementsByTagName("canvas")[0];
+    var ctx = canvas.getContext("2d");
+    canvas.width="600";
+    canvas.height="400";
+    canBox.removeChild(curCan);
+    canBox.appendChild(canvas);
+    canvas.addEventListener("mousedown",mouseHandler);
+}
+// <第二部分>打开图片
+var dakai = document.getElementsByTagName("li")[1];
+var myFile = document.getElementsByTagName("input")[0];
+dakai.onclick = ()=>{
+    var fileObj = myFile.files[0];
+    if(!/[jpg,png,img]\/\w+/.test(fileObj.type)){
+        var reader = new FileReader();
+        reader.readAsDataURL(fileObj);
+        reader.onload = function(){
+            var imgData = reader.result;
+            var imgNode = document.createElement("img");
+            imgNode.src = imgData;//直接把数据转变成图片。
+            convertImageToCanvas(imgNode);
+        }
+    }
+    else{
+        alert("请选择img格式的文件");
+    }
+}
+function convertImageToCanvas(image) {
+	var canvas = document.createElement("canvas");
+    var curCan = document.getElementsByTagName("canvas")[0];
+    var canvasBox = document.getElementById("canvas");
+	canvas.width = image.width;
+	canvas.height = image.height;
+    canvas.getContext("2d").drawImage(image, 0, 0);
+    canvasBox.removeChild(curCan);
+    canvasBox.appendChild(canvas);
+	return canvas;
+}
+// <第三部分>保存画布为图片
+var baocun = document.getElementsByTagName("li")[2];
+function convertCanvasToImage(canvas) {
+	var image = new Image();
+	image.src = canvas.toDataURL("image/png");
+	console.log(image);
+}
+baocun.onclick = ()=>{
+    var canvas = document.getElementsByTagName("canvas")[0];
+    convertCanvasToImage(canvas);
+}
+// ------------------二级菜单---文件部分结束----------------
+
+
+// ---------------二级菜单---编辑部分
+// <第一部分>撤回
+
+// <第二部分>清空
+var qingkong = document.getElementsByTagName("li")[4];
+qingkong.onclick = ()=>{
+    var height=canvas.height;
+    var width=canvas.width;
+    ctx.clearRect(0,0,width,height);
+}
+// ---------------二级菜单---视图部分
+var tool = document.getElementsByTagName("li")[5];
+var color = document.getElementsByTagName("li")[6];
+var toolFlag=1;
+var colorFlag=1;
+tool.onclick = ()=>{
+    var canBox=document.getElementById("canvas");
+    var tool_bar=document.getElementById("tool_bar");
+    if(toolFlag==1){
+        tool_bar.style.display="none";
+        canBox.style.width="100%";
+        toolFlag=0;
+    }
+    else{
+        tool_bar.style.display="flex";
+        canBox.style.width="94%";
+        toolFlag=1;
+    }
+    
+}
+color.onclick=()=>{
+    var color_bar=document.getElementById("color_bar");
+    if(colorFlag==1){
+        color_bar.style.display="none";
+        colorFlag=0;
+    }
+    else{
+        color_bar.style.display="flex";
+        colorFlag=1;
+    }
+}
+var message = document.getElementsByTagName("li")[7];
+var zhuangFlag=1;
+message.onclick = ()=>{
+    var zhuang = document.getElementById("foot");
+    if(zhuangFlag==1){
+        zhuang.style.display="none";
+        zhuangFlag=0;
+    }
+    else{
+        zhuang.style.display="flex";
+        zhuangFlag=1;
+    }
+}
+
+// 三级菜单---帮助-----------------------------
+var bangzhu= document.getElementsByTagName("li")[8];
+bangzhu.onclick = ()=>{
+    alert("画布的简要说明blabla");
+}
+</script>
+</html>
